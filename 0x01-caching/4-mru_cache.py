@@ -1,25 +1,26 @@
 #!/usr/bin/env python3
-"""Defines a class that implements a LRU cache"""
+"""Defines a class that implements a LIFO cache"""
 
 from base_caching import BaseCaching
 
 
-class LRUCache(BaseCaching):
+class MRUCache(BaseCaching):
     """
-    LRU -> Least Reently Used
-    This class implements a cache algorithm that evicts
-    the item that has the greatest time since it was last
-    used. we may say it considers this data relatively
-    obsolete
+    MRU -> Most Recently Used
 
-    I will be using annother array of same size as the max
-    number of items that may be in memory to track their use
-    time. This will result in a space complexity of O(n), bad?
+    This class implements a caching system that discards the
+    most recently used item when the list is full. it can be
+    used for scenarios where other items must be accessed after
+    an item is used once before it can be used again
 
-    Another implenmentation is to delete and re-write each data
-    as they are used, so they will be considered most recently
-    used. this will be slower because or read and write is performed
-    every time an item is queried. I will ise this anyway
+    we could use a list to track when an item is used. this will
+    add one layer to the memory space and also there will be looking
+    up or array when we want to make o choice on which to discard
+
+    on the other hand, we can re-write an item when it is requested,
+    this will update the last time it was used using inbuilt dictonary
+    in python. the only downside is having to delete, and re-write every
+    time an item is requested
     """
 
     def __init__(self):
@@ -34,7 +35,7 @@ class LRUCache(BaseCaching):
                 if key in self.cache_data:
                     old = key
                 else:
-                    old = list(self.cache_data)[0]
+                    old = list(self.cache_data)[-1]
                     print("DISCARD: {}".format(old))
                 del self.cache_data[old]
             self.cache_data[key] = item
@@ -43,9 +44,9 @@ class LRUCache(BaseCaching):
         """Retrieves data from cache memory"""
         if key is None or key not in self.cache_data:
             return None
+        # Update the last used time
         data = self.cache_data.get(key)
-
-        # Re-write it so the use time can be updated
         del self.cache_data[key]
         self.cache_data[key] = data
+
         return data

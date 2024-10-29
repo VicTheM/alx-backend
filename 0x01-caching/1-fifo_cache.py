@@ -8,7 +8,7 @@ class FIFOCache(BaseCaching):
     """When the memory is full, this cache removes
     the data that has stayed longest in memory: That
     is a First-in First-out algorithm."""
-    
+
     def __init__(self):
         """Initialization function for every new object"""
         super().__init__()

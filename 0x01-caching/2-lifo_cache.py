@@ -9,7 +9,7 @@ class LIFOCache(BaseCaching):
     the data that entered memory most recently: meaning
     oldest data persists over new comers, this is a LIFO
     algorithm."""
-    
+
     def __init__(self):
         """Initialization function for every new object"""
         super().__init__()
