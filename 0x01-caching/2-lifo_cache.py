@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Defines a class that implements a FIFO cache"""
+"""Defines a class that implements a LIFO cache"""
 
 from base_caching import BaseCaching
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """When the memory is full, this cache removes
-    the data that has stayed longest in memory: That
-    is a First-in First-out algorithm."""
+    the data that entered memory most recently: meaning
+    oldest data persists over new comers, this is a LIFO
+    algorithm."""
     
     def __init__(self):
         """Initialization function for every new object"""
@@ -21,7 +22,7 @@ class FIFOCache(BaseCaching):
                 if key in self.cache_data:
                     old = key
                 else:
-                    old = list(self.cache_data)[0]
+                    old = list(self.cache_data)[-1]
                     print("DISCARD: {}".format(old))
                 del self.cache_data[old]
             self.cache_data[key] = item
